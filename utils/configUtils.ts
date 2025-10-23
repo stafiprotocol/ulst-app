@@ -3,80 +3,76 @@ import { getEvmChainId } from 'config/env';
 import { bscTestnet, bsc, mainnet } from 'wagmi/chains';
 
 export function getLsdTokenName() {
-	return appConfig.token.lsdTokenName;
+  return appConfig.token.lsdTokenName;
 }
 
 export function getAppTitle() {
-	return appConfig.appTitle;
+  return appConfig.appTitle;
 }
 
 export function getSupportChains() {
-	return appConfig.token.supportChains;
+  return appConfig.token.supportChains;
 }
 
 export function getTokenStandard() {
-	return appConfig.token.tokenStandard;
+  return appConfig.token.tokenStandard;
 }
 
 export function getTokenChainName() {
-	return appConfig.token.tokenChainName;
+  return appConfig.token.tokenChainName;
 }
 
 export function getDetailInfoListedIns() {
-	return appConfig.detailedInfo.listedIns;
+  return appConfig.detailedInfo.listedIns;
 }
 
 export function getDetailInfoAudit() {
-	return appConfig.detailedInfo.audit;
+  return appConfig.detailedInfo.audit;
 }
 
 export interface IFaqContent {
-	type: string;
-	content: string;
-	link?: string;
+  type: string;
+  content: string;
+  link?: string;
 }
 export interface IFaqItem {
-	title: string;
-	contents: IFaqContent[];
+  title: string;
+  contents: IFaqContent[];
 }
 
 export function getFaqList(): IFaqItem[] {
-	return appConfig.faqList;
+  return appConfig.faqList;
 }
 
 export function getUnstakeTipLink() {
-	return appConfig.unstake.lockTipLink;
+  return appConfig.unstake.lockTipLink;
 }
 
 export function getAuditList() {
-	return appConfig.auditList;
-}
-
-export function getTokenPriceUrl() {
-	return appConfig.tokenPriceUrl;
+  return appConfig.auditList;
 }
 
 export function getDefaultApr() {
-	return appConfig.apr;
+  return appConfig.apr;
 }
 
 export function getContactList() {
-	return appConfig.contactList;
+  return appConfig.contactList;
 }
 
 export function getExternalLinkList() {
-	return appConfig.externalLinkList;
+  return appConfig.externalLinkList;
 }
 
 export function getWagmiNetwork() {
-	if (getEvmChainId() === 97) {
-		return bscTestnet;
-	} else if (getEvmChainId() === 56) {
-		return bsc;
-	}
-	return mainnet;
+  if (getEvmChainId() === 97) {
+    return bscTestnet;
+  } else if (getEvmChainId() === 56) {
+    return bsc;
+  }
+  return mainnet;
 }
 
 export function needRelayFee() {
-	return appConfig.needRelayFee;
+  return appConfig.needRelayFee;
 }

@@ -1,103 +1,103 @@
 {
-	"appTitle": "ULST App",
-	"token": {
-		"lsdTokenName": "UUST",
-		"lsdTokenDecimals": 6,
-		"supportChains": ["Ethereum", "Arbitrum", "Optimism", "Polygon"],
-		"tokenStandard": "ERC20",
-		"tokenChainName": "Ethereum",
-		"tokenImg": "/images/token/token.svg",
-		"lsdTokenImg": "/images/token/lsdToken.svg",
-		"chainImg": "/images/bsc_chain.svg"
-	},
-	"unstake": {
-		"lockTipLink": "https://docs.stafi.io"
-	},
-	"apr": 5,
-	"needRelayFee": false,
-	"detailedInfo": {
-		"audit": {
-			"nameList": ["Blocksec"],
-			"link": "https://github.com/stafiprotocol/security/tree/main/audits/202306_BlockSec_StaFi-BNBStaking"
-		},
-		"listedIns": [
-			{
-				"name": "CoinGecko",
-				"link": "https://www.coingecko.com/en/coins/stafi-staked-bnb"
-			},
-			{
-				"name": "CoinMarketCap",
-				"link": "https://coinmarketcap.com/currencies/stafi-staked-bnb/"
-			}
-		]
-	},
-	"auditList": [
-		{
-			"name": "BlockSec",
-			"icon": "/images/audit/block_sec.svg",
-			"iconDark": "/images/audit/block_sec_dark.svg"
-		}
-	],
-	"faqList": [
-		{
-			"title": "What are the factors that affect the staking rewards?",
-			"contents": [
-				{
-					"type": "text",
-					"content": "Reward normally is updated every 24 hours.\n"
-				},
-				{
-					"type": "text",
-					"content": "UUST liquid staking rewards are mainly decided by the staking APR, delegation strategy and the original validator's slash risks."
-				}
-			]
-		},
-		{
-			"title": "How to calculate UUST exchange rate?",
-			"contents": [
-				{
-					"type": "text",
-					"content": "UUST exchange rate is recording how many USDCs could be unstaked with 1 UUST token. It will start from 1 and gradually increase along with the staking rewards generated continuously.\n"
-				},
-				{
-					"type": "link",
-					"content": "Check more details",
-					"link": "https://docs.stafi.io"
-				}
-			]
-		}
-	],
-	"externalLinkList": [
-		{
-			"name": "Docs",
-			"link": "https://docs.stafi.io"
-		},
-		{
-			"name": "Website",
-			"link": "https://www.stafi.io"
-		},
-		{
-			"name": "UUST Listing",
-			"link": "https://docs.stafi.io/"
-		}
-	],
-	"contactList": [
-		{
-			"type": "Twitter",
-			"link": "https://twitter.com/Stafi_Protocol"
-		},
-		{
-			"type": "Medium",
-			"link": "https://stafi-protocol.medium.com/"
-		},
-		{
-			"type": "Discord",
-			"link": "https://discord.com/invite/jB77etn"
-		},
-		{
-			"type": "Telegram",
-			"link": "https://t.me/stafi_protocol"
-		}
-	],
-	"tokenPriceUrl": "https://api.coingecko.com/api/v3/simple/price?ids=hyperliquid&vs_currencies=usd"
+  "appTitle": "ULST App",
+  "token": {
+    "lsdTokenName": "rUSD",
+    "lsdTokenDecimals": 6,
+    "supportChains": ["Ethereum"],
+    "tokenStandard": "ERC20",
+    "tokenChainName": "Ethereum",
+    "tokenImg": "/images/token/token.svg",
+    "lsdTokenImg": "/images/token/lsdToken.svg",
+    "chainImg": "/images/bsc_chain.svg"
+  },
+  "unstake": {
+    "lockTipLink": "https://docs.stafi.io"
+  },
+  "apr": 5,
+  "needRelayFee": false,
+  "detailedInfo": {
+    "audit": {
+      "nameList": ["Blocksec"],
+      "link": "https://github.com/stafiprotocol/security/tree/main/audits/202306_BlockSec_StaFi-BNBStaking"
+    },
+    "listedIns": [
+      {
+        "name": "CoinGecko",
+        "link": "https://www.coingecko.com/en/coins/stafi-staked-bnb"
+      },
+      {
+        "name": "CoinMarketCap",
+        "link": "https://coinmarketcap.com/currencies/stafi-staked-bnb/"
+      }
+    ]
+  },
+  "auditList": [
+    {
+      "name": "BlockSec",
+      "icon": "/images/audit/block_sec.svg",
+      "iconDark": "/images/audit/block_sec_dark.svg"
+    }
+  ],
+  "faqList": [
+    {
+      "title": "What are the factors that affect the staking rewards?",
+      "contents": [
+        {
+          "type": "text",
+          "content": "Reward normally is updated every 24 hours.\n"
+        },
+        {
+          "type": "text",
+          "content": "rUSD liquid staking rewards are mainly decided by the staking APR, delegation strategy and the original validator's slash risks."
+        }
+      ]
+    },
+    {
+      "title": "How to calculate rUSD exchange rate?",
+      "contents": [
+        {
+          "type": "text",
+          "content": "rUSD exchange rate is recording how many USDCs could be unstaked with 1 rUSD token. It will start from 1 and gradually increase along with the staking rewards generated continuously.\n"
+        },
+        {
+          "type": "link",
+          "content": "Check more details",
+          "link": "https://docs.stafi.io/stake/rtoken/#rtoken-exchange-rate"
+        }
+      ]
+    }
+  ],
+  "externalLinkList": [
+    {
+      "name": "Docs",
+      "link": "https://docs.stafi.io"
+    },
+    {
+      "name": "Website",
+      "link": "https://www.stafi.io"
+    },
+    {
+      "name": "rUSD Listing",
+      "link": "https://docs.stafi.io/"
+    }
+  ],
+  "contactList": [
+    {
+      "type": "Twitter",
+      "link": "https://twitter.com/Stafi_Protocol"
+    },
+    {
+      "type": "Medium",
+      "link": "https://stafi-protocol.medium.com/"
+    },
+    {
+      "type": "Discord",
+      "link": "https://discord.com/invite/jB77etn"
+    },
+    {
+      "type": "Telegram",
+      "link": "https://t.me/stafi_protocol"
+    }
+  ],
+  "ethPriceUrl": "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
 }

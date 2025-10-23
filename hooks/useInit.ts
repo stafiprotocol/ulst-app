@@ -1,29 +1,31 @@
-import dayjs from "dayjs";
-import { useEffect } from "react";
+import dayjs from 'dayjs';
+import { useEffect } from 'react';
 import {
   setDarkMode,
   setUnreadNoticeFlag,
   setUpdateFlag,
-} from "redux/reducers/AppSlice";
-import { setRate, updateApr } from "redux/reducers/LsdTokenSlice";
+} from 'redux/reducers/AppSlice';
+import { setRate, updateApr } from 'redux/reducers/LsdTokenSlice';
 import {
   setMetaMaskAccount,
   setMetaMaskChainId,
   setMetaMaskDisconnected,
-} from "redux/reducers/WalletSlice";
+} from 'redux/reducers/WalletSlice';
 import {
   getStorage,
   STORAGE_KEY_DARK_MODE,
   STORAGE_KEY_DISCONNECT_METAMASK,
   STORAGE_KEY_UNREAD_NOTICE,
-} from "utils/storageUtils";
-import { useAppDispatch } from "./common";
-import { useInterval } from "./useInterval";
-import { useAccount } from "wagmi";
-import { useQuery } from "@tanstack/react-query";
-import { readContract } from "@wagmi/core";
-import { wagmiConfig } from "connectors/walletConnect";
-import { getStakeManagerAbi, getStakeManagerAddress } from "config/contract";
+} from 'utils/storageUtils';
+import { useAppDispatch } from './common';
+import { useInterval } from './useInterval';
+import { useAccount } from 'wagmi';
+import { useQuery } from '@tanstack/react-query';
+import { readContract } from '@wagmi/core';
+import { wagmiConfig } from 'connectors/walletConnect';
+import { getStakeManagerAbi, getStakeManagerAddress } from 'config/contract';
+import { getEthPriceUrl } from 'config/env';
+import { setEthPrice } from 'redux/reducers/TokenSlice';
 
 export function useInit() {
   const dispatch = useAppDispatch();
@@ -44,7 +46,7 @@ export function useInit() {
   }, [dispatch, wagmiAddress, wagmiIsConnected, wagmiIsDisconnected]);
 
   useEffect(() => {
-    dispatch(setMetaMaskChainId(wagmiChainId ? wagmiChainId + "" : "1"));
+    dispatch(setMetaMaskChainId(wagmiChainId ? wagmiChainId + '' : '1'));
   }, [dispatch, wagmiChainId]);
 
   useEffect(() => {
@@ -62,7 +64,7 @@ export function useInit() {
   }, 6000); // 6s
 
   const aprResult = useQuery<null>({
-    queryKey: ["getLsdTokenApr"],
+    queryKey: ['getLsdTokenApr'],
     refetchInterval: 10 * 1000,
     queryFn: async () => {
       dispatch(updateApr());
@@ -71,16 +73,37 @@ export function useInit() {
   });
 
   const rateResult = useQuery<null>({
-    queryKey: ["getLsdTokenRate"],
+    queryKey: ['getLsdTokenRate'],
     refetchInterval: 10 * 1000,
     queryFn: async () => {
       try {
         const rate = await readContract(wagmiConfig, {
           address: getStakeManagerAddress() as `0x${string}`,
           abi: getStakeManagerAbi(),
-          functionName: "getRate",
+          functionName: 'getRate',
         });
-        dispatch(setRate(Number(rate) / 10 ** 18 + ""));
+        dispatch(setRate(Number(rate) / 10 ** 18 + ''));
+      } catch (err: any) {
+        console.log(err);
+      }
+      return null;
+    },
+  });
+
+  const ethPriceResult = useQuery<null>({
+    queryKey: ['getEthPrice'],
+    refetchInterval: 10 * 1000,
+    queryFn: async () => {
+      try {
+        const res = await fetch(getEthPriceUrl(), {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'GET',
+        });
+        const resJson = await res.json();
+        const price = resJson.ethereum.usd;
+        dispatch(setEthPrice(price));
       } catch (err: any) {
         console.log(err);
       }

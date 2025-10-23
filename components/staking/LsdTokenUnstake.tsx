@@ -1,35 +1,35 @@
-import { Icomoon } from "components/icon/Icomoon";
-import { getEvmChainId, getEvmChainName, getStableCoins } from "config/env";
-import { useAppDispatch, useAppSelector } from "hooks/common";
-import { useBalance } from "hooks/useBalance";
-import { useWalletAccount } from "hooks/useWalletAccount";
-import { useRouter } from "next/router";
-import { useMemo, useState } from "react";
-import { handleLsdTokenUnstake } from "redux/reducers/TokenSlice";
-import { isEmptyValue, openLink } from "utils/commonUtils";
-import { formatLargeAmount, formatNumber } from "utils/numberUtils";
-import Web3 from "web3";
-import { CustomButton } from "../common/CustomButton";
-import { CustomNumberInput } from "../common/CustomNumberInput";
-import { DataLoading } from "../common/DataLoading";
-import { getLsdTokenName, getUnstakeTipLink } from "utils/configUtils";
-import Image from "next/image";
-import { getLsdTokenIcon } from "utils/iconUtils";
-import { useLsdTokenRate } from "hooks/useLsdTokenRate";
-import { useApr } from "hooks/useApr";
-import HoverPopover from "material-ui-popup-state/HoverPopover";
-import { bindPopover, bindHover } from "material-ui-popup-state";
-import classNames from "classnames";
-import { usePopupState } from "material-ui-popup-state/hooks";
-import { getUnstakeDaysLeft } from "utils/lsdTokenUtils";
-import { usePrice } from "hooks/usePrice";
-import { BubblesLoading } from "components/common/BubblesLoading";
-import tipImg from "public/images/tip.svg";
-import { useConnect, useEstimateGas, useGasPrice } from "wagmi";
-import { switchChain } from "@wagmi/core";
-import { wagmiConfig } from "connectors/walletConnect";
-import { MaxBtn } from "components/common/MaxBtn";
-import { useLsdBalance } from "hooks/useLsdBalance";
+import { Icomoon } from 'components/icon/Icomoon';
+import { getEvmChainId, getEvmChainName, getStableCoins } from 'config/env';
+import { useAppDispatch, useAppSelector } from 'hooks/common';
+import { useBalance } from 'hooks/useBalance';
+import { useWalletAccount } from 'hooks/useWalletAccount';
+import { useRouter } from 'next/router';
+import { useMemo, useState } from 'react';
+import { handleLsdTokenUnstake } from 'redux/reducers/TokenSlice';
+import { isEmptyValue, openLink } from 'utils/commonUtils';
+import { formatLargeAmount, formatNumber } from 'utils/numberUtils';
+import Web3 from 'web3';
+import { CustomButton } from '../common/CustomButton';
+import { CustomNumberInput } from '../common/CustomNumberInput';
+import { DataLoading } from '../common/DataLoading';
+import { getLsdTokenName, getUnstakeTipLink } from 'utils/configUtils';
+import Image from 'next/image';
+import { getLsdTokenIcon } from 'utils/iconUtils';
+import { useLsdTokenRate } from 'hooks/useLsdTokenRate';
+import { useApr } from 'hooks/useApr';
+import HoverPopover from 'material-ui-popup-state/HoverPopover';
+import { bindPopover, bindHover } from 'material-ui-popup-state';
+import classNames from 'classnames';
+import { usePopupState } from 'material-ui-popup-state/hooks';
+import { getUnstakeDaysLeft } from 'utils/lsdTokenUtils';
+import { usePrice } from 'hooks/usePrice';
+import { BubblesLoading } from 'components/common/BubblesLoading';
+import tipImg from 'public/images/tip.svg';
+import { useConnect, useEstimateGas, useGasPrice } from 'wagmi';
+import { switchChain } from '@wagmi/core';
+import { wagmiConfig } from 'connectors/walletConnect';
+import { MaxBtn } from 'components/common/MaxBtn';
+import { useLsdBalance } from 'hooks/useLsdBalance';
 
 export const LsdTokenUnstake = () => {
   const router = useRouter();
@@ -47,8 +47,9 @@ export const LsdTokenUnstake = () => {
 
   const apr = useApr();
   const { tokenPrice } = usePrice();
+  const { ethPrice } = useAppSelector((state) => state.token);
 
-  const [unstakeAmount, setUnstakeAmount] = useState("");
+  const [unstakeAmount, setUnstakeAmount] = useState('');
 
   const { unstakeLoading } = useAppSelector((state) => state.app);
   const { unbondingDuration } = useAppSelector((state) => state.lsdToken);
@@ -59,7 +60,7 @@ export const LsdTokenUnstake = () => {
 
   const availableBalance = useMemo(() => {
     if (walletNotConnected) {
-      return "--";
+      return '--';
     }
     return lsdBalance;
   }, [lsdBalance, walletNotConnected]);
@@ -83,18 +84,18 @@ export const LsdTokenUnstake = () => {
 
   const estimateFee = useMemo(() => {
     if (!gasPrice || !gasEstimate) {
-      return "--";
+      return '--';
     }
 
     return Web3.utils.fromWei((gasPrice * gasEstimate).toString());
   }, [gasPrice, gasEstimate]);
 
   const estimateFeeValue = useMemo(() => {
-    if (isNaN(Number(estimateFee)) || isNaN(Number(tokenPrice))) {
-      return "--";
+    if (isNaN(Number(estimateFee)) || isNaN(Number(ethPrice))) {
+      return '--';
     }
-    return Number(estimateFee) * Number(tokenPrice) + "";
-  }, [estimateFee, tokenPrice]);
+    return Number(estimateFee) * Number(ethPrice) + '';
+  }, [estimateFee, ethPrice]);
 
   const willReceiveAmount = useMemo(() => {
     if (
@@ -102,14 +103,14 @@ export const LsdTokenUnstake = () => {
       isNaN(Number(lsdTokenRate)) ||
       Number(unstakeAmount) === 0
     ) {
-      return "--";
+      return '--';
     }
-    return Number(unstakeAmount) * Number(lsdTokenRate) + "";
+    return Number(unstakeAmount) * Number(lsdTokenRate) + '';
   }, [unstakeAmount, lsdTokenRate]);
 
   const [buttonDisabled, buttonText, isButtonSecondary] = useMemo(() => {
     if (walletNotConnected) {
-      return [false, "Connect Wallet"];
+      return [false, 'Connect Wallet'];
     }
     if (isWrongMetaMaskNetwork) {
       return [
@@ -125,7 +126,7 @@ export const LsdTokenUnstake = () => {
       Number(unstakeAmount) === 0 ||
       isNaN(Number(availableBalance))
     ) {
-      return [true, "Unstake"];
+      return [true, 'Unstake'];
     }
 
     if (Number(unstakeAmount) > Number(availableBalance)) {
@@ -139,7 +140,7 @@ export const LsdTokenUnstake = () => {
       return [true, `Not Enough ETH for Fee`];
     }
 
-    return [false, "Unstake"];
+    return [false, 'Unstake'];
   }, [
     isWrongMetaMaskNetwork,
     availableBalance,
@@ -151,21 +152,21 @@ export const LsdTokenUnstake = () => {
 
   const newRTokenBalance = useMemo(() => {
     if (isNaN(Number(availableBalance))) {
-      return "--";
+      return '--';
     }
     if (isNaN(Number(unstakeAmount))) {
-      return "--";
+      return '--';
     }
-    return Number(availableBalance) - Number(unstakeAmount) + "";
+    return Number(availableBalance) - Number(unstakeAmount) + '';
   }, [availableBalance, unstakeAmount]);
 
   const resetState = () => {
-    setUnstakeAmount("");
+    setUnstakeAmount('');
   };
 
   const clickConnectWallet = async () => {
     const metamaskConnector = connectors.find(
-      (item) => item.name === "MetaMask"
+      (item) => item.name === 'MetaMask'
     );
     if (!metamaskConnector) return;
     if (!metaMaskAccount) {
@@ -199,7 +200,7 @@ export const LsdTokenUnstake = () => {
       pathname: router.pathname,
       query: {
         ...router.query,
-        tab: "withdraw",
+        tab: 'withdraw',
       },
     });
   };
@@ -228,13 +229,13 @@ export const LsdTokenUnstake = () => {
   };
 
   const ratePopupState = usePopupState({
-    variant: "popover",
-    popupId: "rate",
+    variant: 'popover',
+    popupId: 'rate',
   });
 
   const txFeePopupState = usePopupState({
-    variant: "popover",
-    popupId: "txFee",
+    variant: 'popover',
+    popupId: 'txFee',
   });
 
   // useEffect(() => {
@@ -261,7 +262,7 @@ export const LsdTokenUnstake = () => {
           </div>
 
           <div className="ml-[.06rem] text-[#6C86AD] text-[.14rem] leading-normal tracking-tight">
-            Unstaking may take{" "}
+            Unstaking may take{' '}
             <span className="text-[#222C3C]">
               {getUnstakeDaysLeft(unbondingDuration)}
             </span>
@@ -305,7 +306,7 @@ export const LsdTokenUnstake = () => {
               <div className="text-[#272727]">
                 {unstakeValue
                   ? `$${formatNumber(unstakeValue, { decimals: 2 })}`
-                  : ""}{" "}
+                  : ''}{' '}
               </div>
 
               <div className="flex items-center">
@@ -326,14 +327,14 @@ export const LsdTokenUnstake = () => {
         className="mx-[.24rem]"
         height=".56rem"
         onClick={clickUnstake}
-        type={isButtonSecondary ? "secondary" : "primary"}
+        type={isButtonSecondary ? 'secondary' : 'primary'}
         border="none"
       >
         <div className="flex items-center">
           {buttonText}
 
-          {(buttonText.indexOf("Wrong network") >= 0 ||
-            buttonText.indexOf("Insufficient FIS.") >= 0) && (
+          {(buttonText.indexOf('Wrong network') >= 0 ||
+            buttonText.indexOf('Insufficient FIS.') >= 0) && (
             <div className="ml-[.12rem] flex items-center">
               <Icomoon icon="arrow-right" size=".12rem" color="#222C3C" />
             </div>
@@ -343,7 +344,7 @@ export const LsdTokenUnstake = () => {
 
       <div
         className="mt-[.24rem] grid items-stretch font-[500] mx-[.75rem]"
-        style={{ gridTemplateColumns: "40% 30% 30%" }}
+        style={{ gridTemplateColumns: '40% 30% 30%' }}
       >
         <div className="flex justify-start ml-[.18rem]">
           <div className="flex flex-col items-center">
@@ -357,8 +358,8 @@ export const LsdTokenUnstake = () => {
               </div>
               <div
                 className={classNames(
-                  "ml-[.06rem] flex items-center relative self-center",
-                  ratePopupState.isOpen ? "rotate-[270deg]" : "rotate-90"
+                  'ml-[.06rem] flex items-center relative self-center',
+                  ratePopupState.isOpen ? 'rotate-[270deg]' : 'rotate-90'
                 )}
               >
                 <Icomoon
@@ -401,8 +402,8 @@ export const LsdTokenUnstake = () => {
               </div>
               <div
                 className={classNames(
-                  "ml-[.06rem] flex items-center relative self-center",
-                  txFeePopupState.isOpen ? "rotate-[270deg]" : "rotate-90"
+                  'ml-[.06rem] flex items-center relative self-center',
+                  txFeePopupState.isOpen ? 'rotate-[270deg]' : 'rotate-90'
                 )}
               >
                 <Icomoon
@@ -420,33 +421,33 @@ export const LsdTokenUnstake = () => {
       <HoverPopover
         {...bindPopover(ratePopupState)}
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "center",
+          vertical: 'bottom',
+          horizontal: 'center',
         }}
         transformOrigin={{
-          vertical: "top",
-          horizontal: "center",
+          vertical: 'top',
+          horizontal: 'center',
         }}
         elevation={0}
         sx={{
-          marginTop: ".15rem",
-          "& .MuiPopover-paper": {
-            background: "#FFFFFF80",
-            border: "0.01rem solid #ffffff",
-            backdropFilter: "blur(.4rem)",
-            borderRadius: ".3rem",
+          marginTop: '.15rem',
+          '& .MuiPopover-paper': {
+            background: '#FFFFFF80',
+            border: '0.01rem solid #ffffff',
+            backdropFilter: 'blur(.4rem)',
+            borderRadius: '.3rem',
           },
-          "& .MuiTypography-root": {
-            padding: "0px",
+          '& .MuiTypography-root': {
+            padding: '0px',
           },
-          "& .MuiBox-root": {
-            padding: "0px",
+          '& .MuiBox-root': {
+            padding: '0px',
           },
         }}
       >
         <div
           className={classNames(
-            "p-[.16rem] text-[.14rem] text-[#6C86AD] flex flex-col justify-center"
+            'p-[.16rem] text-[.14rem] text-[#6C86AD] flex flex-col justify-center'
           )}
         >
           <div className="text-center leading-normal">Exchange Rate</div>
@@ -459,33 +460,33 @@ export const LsdTokenUnstake = () => {
       <HoverPopover
         {...bindPopover(txFeePopupState)}
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "center",
+          vertical: 'bottom',
+          horizontal: 'center',
         }}
         transformOrigin={{
-          vertical: "top",
-          horizontal: "center",
+          vertical: 'top',
+          horizontal: 'center',
         }}
         elevation={0}
         sx={{
-          marginTop: ".15rem",
-          "& .MuiPopover-paper": {
-            background: "#ffffff80",
-            border: "0.01rem solid #ffffff",
-            backdropFilter: "blur(.4rem)",
-            borderRadius: ".3rem",
+          marginTop: '.15rem',
+          '& .MuiPopover-paper': {
+            background: '#ffffff80',
+            border: '0.01rem solid #ffffff',
+            backdropFilter: 'blur(.4rem)',
+            borderRadius: '.3rem',
           },
-          "& .MuiTypography-root": {
-            padding: "0px",
+          '& .MuiTypography-root': {
+            padding: '0px',
           },
-          "& .MuiBox-root": {
-            padding: "0px",
+          '& .MuiBox-root': {
+            padding: '0px',
           },
         }}
       >
         <div
           className={classNames(
-            "text-[#6C86AD] w-[2.5rem] p-[.16rem] text-[.14rem]"
+            'text-[#6C86AD] w-[2.5rem] p-[.16rem] text-[.14rem]'
           )}
         >
           <div className="flex justify-between my-[.16rem]">
@@ -495,7 +496,7 @@ export const LsdTokenUnstake = () => {
                 <BubblesLoading />
               ) : (
                 formatNumber(estimateFee, { decimals: 4 })
-              )}{" "}
+              )}{' '}
               ETH
             </div>
           </div>

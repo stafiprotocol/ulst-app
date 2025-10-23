@@ -19,68 +19,68 @@ import { useReconnect } from 'wagmi';
 const Navbar = dynamic(() => import('./Navbar'), { ssr: false });
 
 export const MyLayoutContext = React.createContext<{
-	navigation: NavigationItem[] | undefined;
-	setNavigation: any;
+  navigation: NavigationItem[] | undefined;
+  setNavigation: any;
 }>({
-	navigation: undefined,
-	setNavigation: undefined,
+  navigation: undefined,
+  setNavigation: undefined,
 });
 
 export const Layout = (props: React.PropsWithChildren) => {
-	useInit();
+  useInit();
 
-	const { reconnectAsync } = useReconnect();
+  const { reconnectAsync } = useReconnect();
 
-	const [navigation, setNavigation] = useState<NavigationItem[]>([]);
+  const [navigation, setNavigation] = useState<NavigationItem[]>([]);
 
-	useEffect(() => {
-		(async () => {
-			await reconnectAsync();
-		})();
-	}, []);
+  useEffect(() => {
+    (async () => {
+      await reconnectAsync();
+    })();
+  }, []);
 
-	return (
-		<MyLayoutContext.Provider
-			value={{
-				navigation,
-				setNavigation,
-			}}
-		>
-			<div className={classNames(roboto.className)}>
-				<Head>
-					<title>{getAppTitle()}</title>
-					<meta name="description" content="" />
-					<meta
-						name="viewport"
-						content="initial-scale=1.0, width=device-width"
-					/>
-				</Head>
+  return (
+    <MyLayoutContext.Provider
+      value={{
+        navigation,
+        setNavigation,
+      }}
+    >
+      <div className={classNames(roboto.className)}>
+        <Head>
+          <title>{getAppTitle()}</title>
+          <meta name="description" content="" />
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+        </Head>
 
-				<HideOnScroll>
-					<AppBar
-						position="fixed"
-						color="transparent"
-						elevation={0}
-						// sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-					>
-						<Navbar />
-					</AppBar>
-				</HideOnScroll>
+        <HideOnScroll>
+          <AppBar
+            position="fixed"
+            color="transparent"
+            elevation={0}
+            sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          >
+            <Navbar />
+          </AppBar>
+        </HideOnScroll>
 
-				<main className="flex flex-col items-center h-[100vh]">
-					<div className="mb-[1rem] w-full">{props.children}</div>
-				</main>
+        <main className="flex flex-col items-center h-[100vh]">
+          <div className="mb-[1rem] w-full">{props.children}</div>
+        </main>
 
-				<StakeLoadingModal />
-				<UnstakeLoadingModal />
-				<WithdrawLoadingModal />
+        <StakeLoadingModal />
+        <UnstakeLoadingModal />
+        <WithdrawLoadingModal />
 
-				<div className="fixed right-0 top-[4rem]">
-					<StakeLoadingSidebar />
-					<UnstakeLoadingSidebar />
-					<WithdrawLoadingSidebar />
-				</div>
-			</div>
-		</MyLayoutContext.Provider>
-	);
+        <div className="fixed right-0 top-[4rem]">
+          <StakeLoadingSidebar />
+          <UnstakeLoadingSidebar />
+          <WithdrawLoadingSidebar />
+        </div>
+      </div>
+    </MyLayoutContext.Provider>
+  );
 };
