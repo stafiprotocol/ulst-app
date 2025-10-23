@@ -14,7 +14,11 @@ import {
   handleTokenStake,
   updateTokenBalance,
 } from 'redux/reducers/TokenSlice';
-import { formatLargeAmount, formatNumber } from 'utils/numberUtils';
+import {
+  formatLargeAmount,
+  formatNumber,
+  toChainAmount,
+} from 'utils/numberUtils';
 import Web3 from 'web3';
 import { CustomButton } from '../common/CustomButton';
 import { CustomNumberInput } from '../common/CustomNumberInput';
@@ -33,13 +37,7 @@ import { isEmptyValue } from 'utils/commonUtils';
 import { BubblesLoading } from 'components/common/BubblesLoading';
 import { usePrice } from 'hooks/usePrice';
 import { useMinStakeAmount } from 'hooks/useMinStakeAmount';
-import {
-  useAccount,
-  useConnect,
-  useEstimateGas,
-  useGasPrice,
-  useReconnect,
-} from 'wagmi';
+import { useAccount, useConnect, useGasPrice } from 'wagmi';
 import { wagmiConfig } from 'connectors/walletConnect';
 import { switchChain } from '@wagmi/core';
 import { Popover } from '@mui/material';
@@ -71,10 +69,8 @@ export const LsdTokenStake = ({ curToken }: Props) => {
   const { rate } = useAppSelector((state) => state.lsdToken);
 
   const { connectAsync, connectors } = useConnect();
-  const { reconnectAsync } = useReconnect();
 
   const { data: gasPrice } = useGasPrice({ config: wagmiConfig });
-  const { data: gasEstimate } = useEstimateGas({ config: wagmiConfig });
 
   const { stableCoinBalance, refetchStableCoinBalance } = useErc20TokenBalance(
     curToken.address
@@ -110,12 +106,14 @@ export const LsdTokenStake = ({ curToken }: Props) => {
   }, [stakeAmount, rate]);
 
   const estimateFee = useMemo(() => {
-    if (!gasPrice || !gasEstimate) {
+    const gasLimit = 200000;
+    console.log({ gasPrice });
+    if (!gasPrice) {
       return '--';
     }
 
-    return Web3.utils.fromWei((gasPrice * gasEstimate).toString());
-  }, [gasPrice, gasEstimate]);
+    return Web3.utils.fromWei((Number(gasPrice) * gasLimit).toString());
+  }, [gasPrice]);
 
   const estimateFeeValue = useMemo(() => {
     if (isNaN(Number(estimateFee)) || isNaN(Number(ethPrice))) {

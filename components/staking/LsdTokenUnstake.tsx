@@ -25,11 +25,12 @@ import { getUnstakeDaysLeft } from 'utils/lsdTokenUtils';
 import { usePrice } from 'hooks/usePrice';
 import { BubblesLoading } from 'components/common/BubblesLoading';
 import tipImg from 'public/images/tip.svg';
-import { useConnect, useEstimateGas, useGasPrice } from 'wagmi';
+import { useConnect, useGasPrice } from 'wagmi';
 import { switchChain } from '@wagmi/core';
 import { wagmiConfig } from 'connectors/walletConnect';
 import { MaxBtn } from 'components/common/MaxBtn';
 import { useLsdBalance } from 'hooks/useLsdBalance';
+import { useUnstakePaused } from 'hooks/useUnstakePaused';
 
 export const LsdTokenUnstake = () => {
   const router = useRouter();
@@ -43,7 +44,8 @@ export const LsdTokenUnstake = () => {
 
   const { connectAsync, connectors } = useConnect();
   const { data: gasPrice } = useGasPrice();
-  const { data: gasEstimate } = useEstimateGas();
+
+  const isUnstakePaused = useUnstakePaused();
 
   const apr = useApr();
   const { tokenPrice } = usePrice();
@@ -83,12 +85,13 @@ export const LsdTokenUnstake = () => {
   }, [unstakeAmount, tokenPrice, lsdTokenRate]);
 
   const estimateFee = useMemo(() => {
-    if (!gasPrice || !gasEstimate) {
+    const gasLimit = 300000;
+    if (!gasPrice) {
       return '--';
     }
 
-    return Web3.utils.fromWei((gasPrice * gasEstimate).toString());
-  }, [gasPrice, gasEstimate]);
+    return Web3.utils.fromWei((Number(gasPrice) * gasLimit).toString());
+  }, [gasPrice]);
 
   const estimateFeeValue = useMemo(() => {
     if (isNaN(Number(estimateFee)) || isNaN(Number(ethPrice))) {
@@ -120,6 +123,10 @@ export const LsdTokenUnstake = () => {
       ];
     }
 
+    if (isUnstakePaused) {
+      return [true, 'Unstake Paused', false];
+    }
+
     if (
       !unstakeAmount ||
       isNaN(Number(unstakeAmount)) ||
@@ -148,6 +155,7 @@ export const LsdTokenUnstake = () => {
     walletNotConnected,
     estimateFee,
     balance,
+    isUnstakePaused,
   ]);
 
   const newRTokenBalance = useMemo(() => {
@@ -237,16 +245,6 @@ export const LsdTokenUnstake = () => {
     variant: 'popover',
     popupId: 'txFee',
   });
-
-  // useEffect(() => {
-  // 	(async () => {
-  // 		const result = await readContract(wagmiConfig, {
-  // 			address: getStakeManagerAddress() as `0x${string}`,
-  // 			abi: getStakeManagerAbi(),
-  // 			functionName: 'isUnstakePaused',
-  // 		});
-  // 	})();
-  // }, []);
 
   return (
     <div>
