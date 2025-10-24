@@ -107,7 +107,6 @@ export const LsdTokenStake = ({ curToken }: Props) => {
 
   const estimateFee = useMemo(() => {
     const gasLimit = 200000;
-    console.log({ gasPrice });
     if (!gasPrice) {
       return '--';
     }

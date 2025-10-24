@@ -197,11 +197,12 @@ export const handleTokenStake =
       const amount = toChainAmount(stakeAmount, stableCoin.decimals);
 
       if (amount.gt(toBN(allowance + ''))) {
+        const approveAmount = toChainAmount(10000000, 6);
         const result = await writeContract(wagmiConfig, {
           functionName: 'approve',
           address: stableCoin.address as `0x${string}`,
           abi: getErc20Abi(),
-          args: [getStakeManagerAddress(), amount],
+          args: [getStakeManagerAddress(), approveAmount],
         });
         const txReceipt = await waitForTransactionReceipt(wagmiConfig, {
           hash: result,
@@ -355,11 +356,12 @@ export const handleLsdTokenUnstake =
       });
 
       if (amount.gt(toBN(allowance + ''))) {
+        const approveAmount = toChainAmount(10000000, 6);
         const result = await writeContract(wagmiConfig, {
           functionName: 'approve',
           address: getLsdTokenAddress() as `0x${string}`,
           abi: getLsdTokenAbi(),
-          args: [getStakeManagerAddress(), amount],
+          args: [getStakeManagerAddress(), approveAmount],
         });
         await waitForTransactionReceipt(wagmiConfig, {
           hash: result,
