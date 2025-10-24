@@ -6,10 +6,10 @@
 	"rpc": "https://ethereum-sepolia-rpc.publicnode.com",
 	"explorer": "https://sepolia.etherscan.io",
 	"contracts": {
-		"lsdFactory": "0xC0Edb65Ae025705A5098ab804DdeD9422B5845B3",
-		"lsdToken": "0x0d1Ab99686159b6B0b1F3d3657fa139D2241c4a4",
-		"stakeManager": "0x828F1A4949A5Caf27517184ACdF00492084aE47a",
-		"stakePool": "0x65d48EF761357b170a1941F4C93e0e5d07a2C49b"
+		"lsdFactory": "0xba2ae6c8cddd628a087d7e43c1ba9844c5bf9638",
+		"lsdToken": "0x61ce3dDE69BB4Ae8fcfBAac80d61be63cE71D15e",
+		"stakeManager": "0xab71BbE2a2417687E6F2205a67edFA86f090111a",
+		"stakePool": "0xdb32F01a52cC5DEbE5859D9BBC5810469A88Fd40"
 	},
 	"stableCoins": [
 		{
