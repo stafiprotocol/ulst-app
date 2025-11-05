@@ -1,28 +1,56 @@
 import { useQuery } from '@tanstack/react-query';
 import { readContract } from '@wagmi/core';
-import { getStakeManagerAddress, getStakeManagerAbi } from 'config/contract';
+import {
+  getStakeManagerAddress,
+  getStakeManagerAbi,
+  getLsdTokenAddress,
+  getLsdTokenAbi,
+} from 'config/contract';
 import { wagmiConfig } from 'connectors/walletConnect';
 import { fromChainAmount } from 'utils/numberUtils';
+import { useAppDispatch, useAppSelector } from './common';
+import { setDecimalsStore } from 'redux/reducers/TokenSlice';
 
 export const useMinStakeAmount = () => {
-	const fetchData = async () => {
-		try {
-			const minStakeAmount = await readContract(wagmiConfig, {
-				address: getStakeManagerAddress() as `0x${string}`,
-				abi: getStakeManagerAbi(),
-				functionName: 'minStakeAmount',
-			});
-			return fromChainAmount(minStakeAmount + '', 6).toString();
-		} catch (err: any) {
-			console.log(err);
-			return null;
-		}
-	};
+  const dispatch = useAppDispatch();
+  const { decimalsStore } = useAppSelector((state) => state.token);
 
-	const result = useQuery<string | null>({
-		queryKey: ['getMinStakeAmount'],
-		queryFn: fetchData,
-	});
+  const fetchData = async () => {
+    try {
+      const minStakeAmount = await readContract(wagmiConfig, {
+        address: getStakeManagerAddress() as `0x${string}`,
+        abi: getStakeManagerAbi(),
+        functionName: 'minStakeAmount',
+      });
 
-	return result.data;
+      let decimals = decimalsStore[getLsdTokenAddress()];
+      if (!decimals) {
+        decimals = Number(
+          await readContract(wagmiConfig, {
+            address: getLsdTokenAddress() as `0x${string}`,
+            abi: getLsdTokenAbi(),
+            functionName: 'decimals',
+          })
+        );
+        dispatch(
+          setDecimalsStore({
+            address: getLsdTokenAddress(),
+            decimals: decimals,
+          })
+        );
+      }
+
+      return fromChainAmount(minStakeAmount + '', decimals).toString();
+    } catch (err: any) {
+      console.log(err);
+      return null;
+    }
+  };
+
+  const result = useQuery<string | null>({
+    queryKey: ['getMinStakeAmount'],
+    queryFn: fetchData,
+  });
+
+  return result.data;
 };

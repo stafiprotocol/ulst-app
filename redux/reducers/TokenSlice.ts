@@ -54,6 +54,10 @@ export interface RelayFee {
   withdraw: string | undefined;
 }
 
+export interface DecimalsStore {
+  [address: string]: number;
+}
+
 export interface TokenState {
   balance: string | undefined;
   currentNodeDepositAmount: string | undefined;
@@ -62,6 +66,7 @@ export interface TokenState {
   relayFee: RelayFee;
   tokenPrice: number | undefined;
   ethPrice: number | undefined;
+  decimalsStore: DecimalsStore;
 }
 
 const initialState: TokenState = {
@@ -80,6 +85,7 @@ const initialState: TokenState = {
   },
   tokenPrice: undefined,
   ethPrice: undefined,
+  decimalsStore: {},
 };
 
 export const tokenSlice = createSlice({
@@ -119,6 +125,16 @@ export const tokenSlice = createSlice({
     setEthPrice: (state: TokenState, action: PayloadAction<number>) => {
       state.ethPrice = action.payload;
     },
+    setDecimalsStore: (
+      state: TokenState,
+      action: PayloadAction<{ address: string; decimals: number }>
+    ) => {
+      const { address, decimals } = action.payload;
+      state.decimalsStore = {
+        ...state.decimalsStore,
+        [address]: decimals,
+      };
+    },
   },
 });
 
@@ -130,6 +146,7 @@ export const {
   setRelayFee,
   setTokenPrice,
   setEthPrice,
+  setDecimalsStore,
 } = tokenSlice.actions;
 
 export default tokenSlice.reducer;
@@ -194,10 +211,27 @@ export const handleTokenStake =
         args: [address, getStakeManagerAddress()],
       });
 
-      const amount = toChainAmount(stakeAmount, stableCoin.decimals);
+      let decimals = getState().token.decimalsStore[stableCoin.address];
+      if (!decimals) {
+        decimals = Number(
+          await readContract(wagmiConfig, {
+            address: getLsdTokenAddress() as `0x${string}`,
+            abi: getLsdTokenAbi(),
+            functionName: 'decimals',
+          })
+        );
+        dispatch(
+          setDecimalsStore({
+            address: getLsdTokenAddress(),
+            decimals: decimals,
+          })
+        );
+      }
+
+      const amount = toChainAmount(stakeAmount, decimals);
 
       if (amount.gt(toBN(allowance + ''))) {
-        const approveAmount = toChainAmount(10000000, 6);
+        const approveAmount = toChainAmount(10000000, decimals);
         const result = await writeContract(wagmiConfig, {
           functionName: 'approve',
           address: stableCoin.address as `0x${string}`,
@@ -346,7 +380,24 @@ export const handleLsdTokenUnstake =
         })
       );
 
-      const amount = toChainAmount(unstakeAmount, 6);
+      let decimals = getState().token.decimalsStore[getLsdTokenAddress()];
+      if (!decimals) {
+        decimals = Number(
+          await readContract(wagmiConfig, {
+            address: getLsdTokenAddress() as `0x${string}`,
+            abi: getLsdTokenAbi(),
+            functionName: 'decimals',
+          })
+        );
+        dispatch(
+          setDecimalsStore({
+            address: getLsdTokenAddress(),
+            decimals: decimals,
+          })
+        );
+      }
+
+      const amount = toChainAmount(unstakeAmount, decimals);
 
       const allowance = await readContract(wagmiConfig, {
         address: getLsdTokenAddress() as `0x${string}`,
@@ -356,7 +407,7 @@ export const handleLsdTokenUnstake =
       });
 
       if (amount.gt(toBN(allowance + ''))) {
-        const approveAmount = toChainAmount(10000000, 6);
+        const approveAmount = toChainAmount(10000000, decimals);
         const result = await writeContract(wagmiConfig, {
           functionName: 'approve',
           address: getLsdTokenAddress() as `0x${string}`,
@@ -521,15 +572,32 @@ export const updateLsdTokenUserWithdrawInfo =
         );
       }
 
+      let decimals = getState().token.decimalsStore[getLsdTokenAddress()];
+      if (!decimals) {
+        decimals = Number(
+          await readContract(wagmiConfig, {
+            address: getLsdTokenAddress() as `0x${string}`,
+            abi: getLsdTokenAbi(),
+            functionName: 'decimals',
+          })
+        );
+        dispatch(
+          setDecimalsStore({
+            address: getLsdTokenAddress(),
+            decimals: decimals,
+          })
+        );
+      }
+
       dispatch(
         setWithdrawInfo({
           avaiableWithdraw: fromChainAmount(
             avaiableWithdrawAmount.toString(),
-            6
+            decimals
           ).toString(),
           overallAmount: fromChainAmount(
             overallWithdrawAmount.toString(),
-            6
+            decimals
           ).toString(),
           remainingTime: remainingEra * Number(eraSeconds) * 1000,
         })

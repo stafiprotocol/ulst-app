@@ -1,28 +1,26 @@
 {
-	"chain": {
-		"id": 11155111,
-		"name": "Ethereum Sepolia"
-	},
-	"rpc": "https://ethereum-sepolia-rpc.publicnode.com",
-	"explorer": "https://sepolia.etherscan.io",
-	"contracts": {
-		"lsdFactory": "0xba2ae6c8cddd628a087d7e43c1ba9844c5bf9638",
-		"lsdToken": "0x61ce3dDE69BB4Ae8fcfBAac80d61be63cE71D15e",
-		"stakeManager": "0xab71BbE2a2417687E6F2205a67edFA86f090111a",
-		"stakePool": "0xdb32F01a52cC5DEbE5859D9BBC5810469A88Fd40"
-	},
-	"stableCoins": [
-		{
-			"name": "USDC",
-			"address": "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
-			"icon": "/images/token/usdc.svg",
-			"decimals": 6
-		},
-		{
-			"name": "PYUSD",
-			"address": "0xCaC524BcA292aaade2DF8A05cC58F0a65B1B3bB9",
-			"icon": "/images/token/usdt.svg",
-			"decimals": 6
-		}
-	]
+  "chain": {
+    "id": 11155111,
+    "name": "Ethereum Sepolia"
+  },
+  "rpc": "https://ethereum-sepolia-rpc.publicnode.com",
+  "explorer": "https://sepolia.etherscan.io",
+  "contracts": {
+    "lsdFactory": "0xba2ae6c8cddd628a087d7e43c1ba9844c5bf9638",
+    "lsdToken": "0x61ce3dDE69BB4Ae8fcfBAac80d61be63cE71D15e",
+    "stakeManager": "0xab71BbE2a2417687E6F2205a67edFA86f090111a",
+    "stakePool": "0xdb32F01a52cC5DEbE5859D9BBC5810469A88Fd40"
+  },
+  "stableCoins": [
+    {
+      "name": "USDC",
+      "address": "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
+      "icon": "/images/token/usdc.svg"
+    },
+    {
+      "name": "PYUSD",
+      "address": "0xCaC524BcA292aaade2DF8A05cC58F0a65B1B3bB9",
+      "icon": "/images/token/usdt.svg"
+    }
+  ]
 }
