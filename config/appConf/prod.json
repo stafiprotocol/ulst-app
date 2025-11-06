@@ -7,20 +7,15 @@
   "explorer": "https://sepolia.etherscan.io",
   "contracts": {
     "lsdFactory": "0xC0Edb65Ae025705A5098ab804DdeD9422B5845B3",
-    "lsdToken": "0x0d1Ab99686159b6B0b1F3d3657fa139D2241c4a4",
-    "stakeManager": "0x828F1A4949A5Caf27517184ACdF00492084aE47a",
+    "lsdToken": "0xe1FDBeA56B702DeD10A8567b3c6039B7eECE72d5",
+    "stakeManager": "0x3D45abC67b63BF0aE02Bf6a1c2FCbCD86094ACe4",
     "stakePool": "0x65d48EF761357b170a1941F4C93e0e5d07a2C49b"
   },
   "stableCoins": [
     {
       "name": "USDC",
-      "address": "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
+      "address": "0xf8Fb3713D459D7C1018BD0A49D19b4C44290EBE5",
       "icon": "/images/token/usdc.svg"
-    },
-    {
-      "name": "PYUSD",
-      "address": "0xCaC524BcA292aaade2DF8A05cC58F0a65B1B3bB9",
-      "icon": "/images/token/usdt.svg"
     }
   ]
 }

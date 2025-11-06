@@ -1,6 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { readContract } from '@wagmi/core';
-import { getStakeManagerAbi, getStakeManagerAddress } from 'config/contract';
+import {
+  getAaveStakeManagerAbi,
+  getStakeManagerAddress,
+} from 'config/contract';
 import { wagmiConfig } from 'connectors/walletConnect';
 
 export function useUnstakePaused() {
@@ -8,7 +11,7 @@ export function useUnstakePaused() {
     try {
       const unstakePaused = await readContract(wagmiConfig, {
         address: getStakeManagerAddress() as `0x${string}`,
-        abi: getStakeManagerAbi(),
+        abi: getAaveStakeManagerAbi(),
         functionName: 'isUnstakePaused',
       });
       return unstakePaused as boolean;

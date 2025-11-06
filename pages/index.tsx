@@ -17,7 +17,7 @@ import {
 import { StakePage } from 'components/staking/StakePage';
 import { useLsdTokenRate } from 'hooks/useLsdTokenRate';
 import { useWalletAccount } from 'hooks/useWalletAccount';
-import { useWithdrawInfo } from 'hooks/useWithdrawInfo';
+// import { useWithdrawInfo } from 'hooks/useWithdrawInfo';
 import { getEvmChainId } from 'config/env';
 import { roboto, roboto700 } from 'config/font';
 import Link from 'next/link';
@@ -28,7 +28,7 @@ import { usePrice } from 'hooks/usePrice';
 const TokenPage = () => {
   const router = useRouter();
 
-  const { withdrawInfo } = useWithdrawInfo();
+  // const { withdrawInfo } = useWithdrawInfo();
 
   const { metaMaskChainId } = useWalletAccount();
 
@@ -55,13 +55,13 @@ const TokenPage = () => {
     return Number(metaMaskChainId) !== getEvmChainId();
   }, [metaMaskChainId]);
 
-  const showWithdrawTab = useMemo(() => {
-    return (
-      !isWrongMetaMaskNetwork &&
-      !isNaN(Number(withdrawInfo.overallAmount)) &&
-      Number(withdrawInfo.overallAmount) > 0
-    );
-  }, [withdrawInfo, isWrongMetaMaskNetwork]);
+  // const showWithdrawTab = useMemo(() => {
+  //   return (
+  //     !isWrongMetaMaskNetwork &&
+  //     !isNaN(Number(withdrawInfo.overallAmount)) &&
+  //     Number(withdrawInfo.overallAmount) > 0
+  //   );
+  // }, [withdrawInfo, isWrongMetaMaskNetwork]);
 
   const totalStakedValue = useMemo(() => {
     if (
@@ -138,13 +138,13 @@ const TokenPage = () => {
     <div className="mt-[2.6rem]">
       <div className="w-[11.33rem] mx-auto 2xl:w-[12.8rem]">
         <div className="my-[.36rem]">
-          {showWithdrawTab && (
+          {/* {showWithdrawTab && (
             <DashboardTabs
               selectedTab={selectedTab}
               onChangeTab={updateTab}
               showWithdrawTab={showWithdrawTab}
             />
-          )}
+          )} */}
 
           <div className="mt-[.36rem] w-[11.33rem] 2xl:w-[12.8rem] flex justify-center gap-[.87rem]">
             <div className={classNames('w-[6.2rem]')}>
@@ -152,9 +152,9 @@ const TokenPage = () => {
                 <StakePage />
               )}
 
-              {selectedTab === 'withdraw' && (
+              {/* {selectedTab === 'withdraw' && (
                 <WithdrawUnstaked withdrawInfo={withdrawInfo} />
-              )}
+              )} */}
             </div>
 
             <div className="w-[4.29rem]">

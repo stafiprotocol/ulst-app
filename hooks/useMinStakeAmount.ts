@@ -2,9 +2,9 @@ import { useQuery } from '@tanstack/react-query';
 import { readContract } from '@wagmi/core';
 import {
   getStakeManagerAddress,
-  getStakeManagerAbi,
   getLsdTokenAddress,
   getLsdTokenAbi,
+  getAaveStakeManagerAbi,
 } from 'config/contract';
 import { wagmiConfig } from 'connectors/walletConnect';
 import { fromChainAmount } from 'utils/numberUtils';
@@ -19,7 +19,7 @@ export const useMinStakeAmount = () => {
     try {
       const minStakeAmount = await readContract(wagmiConfig, {
         address: getStakeManagerAddress() as `0x${string}`,
-        abi: getStakeManagerAbi(),
+        abi: getAaveStakeManagerAbi(),
         functionName: 'minStakeAmount',
       });
 

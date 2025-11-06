@@ -48,7 +48,7 @@
         },
         {
           "type": "text",
-          "content": "rUSD liquid staking rewards are mainly decided by the staking APR, delegation strategy and the original validator's slash risks."
+          "content": "rUSDT liquid staking rewards are mainly decided by the APY on AAVE."
         }
       ]
     },
@@ -57,7 +57,7 @@
       "contents": [
         {
           "type": "text",
-          "content": "rUSD exchange rate is recording how many USDCs could be unstaked with 1 rUSD token. It will start from 1 and gradually increase along with the staking rewards generated continuously.\n"
+          "content": "rUSD exchange rate is recording how many USDTs could be unstaked with 1 rUSD token. It will start from 1 and gradually increase along with the staking rewards generated continuously.\n"
         },
         {
           "type": "link",

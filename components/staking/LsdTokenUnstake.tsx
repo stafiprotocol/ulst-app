@@ -248,7 +248,7 @@ export const LsdTokenUnstake = () => {
 
   return (
     <div>
-      <div
+      {/* <div
         className="cursor-pointer h-[.56rem] mt-[.24rem] mx-[.24rem] bg-[#6C86AD14] rounded-[.12rem] flex items-center justify-between pl-[.12rem] pr-[.18rem]"
         onClick={() => {
           openLink(getUnstakeTipLink());
@@ -269,9 +269,9 @@ export const LsdTokenUnstake = () => {
         </div>
 
         <Icomoon icon="right" color="#6C86AD" size=".11rem" />
-      </div>
+      </div> */}
 
-      <div className="h-[1.07rem] mt-[.18rem] pt-[.24rem] mx-[.24rem] bg-[#E8EFFD] rounded-[.3rem]">
+      <div className="h-[1.07rem] mt-[.32rem] pt-[.24rem] mx-[.24rem] bg-[#E8EFFD] rounded-[.3rem]">
         <div className="mx-[.12rem] flex items-start">
           <div className="h-[.42rem] bg-white rounded-[.3rem] flex items-center cursor-pointer">
             <div className="ml-[.08rem] flex items-center">
@@ -341,7 +341,7 @@ export const LsdTokenUnstake = () => {
       </CustomButton>
 
       <div
-        className="mt-[.24rem] grid items-stretch font-[500] mx-[.75rem]"
+        className="my-[.24rem] grid items-stretch font-[500] mx-[.75rem]"
         style={{ gridTemplateColumns: '40% 30% 30%' }}
       >
         <div className="flex justify-start ml-[.18rem]">

@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
+  getAaveStakeManagerAbi,
   getErc20Abi,
   getLsdTokenAbi,
   getLsdTokenAddress,
-  getStakeManagerAbi,
   getStakeManagerAddress,
 } from 'config/contract';
 import { AppThunk } from 'redux/store';
@@ -253,7 +253,7 @@ export const handleTokenStake =
       const result = await writeContract(wagmiConfig, {
         functionName: 'stake',
         address: getStakeManagerAddress() as `0x${string}`,
-        abi: getStakeManagerAbi(),
+        abi: getAaveStakeManagerAbi(),
         args: [stableCoin.address, amount],
       });
       const txReceipt = await waitForTransactionReceipt(wagmiConfig, {
@@ -421,7 +421,7 @@ export const handleLsdTokenUnstake =
 
       const result = await writeContract(wagmiConfig, {
         address: getStakeManagerAddress() as `0x${string}`,
-        abi: getStakeManagerAbi(),
+        abi: getAaveStakeManagerAbi(),
         functionName: 'unstake',
         args: [stableCoin.address, amount],
       });
@@ -524,7 +524,7 @@ export const updateLsdTokenUserWithdrawInfo =
     try {
       const web3 = getWeb3();
       const stakeManagerContract = new web3.eth.Contract(
-        getStakeManagerAbi(),
+        getAaveStakeManagerAbi(),
         getStakeManagerAddress(),
         { from: metaMaskAccount }
       );
@@ -638,7 +638,7 @@ export const handleTokenWithdraw =
 
       const withdrawResult = await writeContract(wagmiConfig, {
         address: getStakeManagerAddress() as `0x${string}`,
-        abi: getStakeManagerAbi(),
+        abi: getAaveStakeManagerAbi(),
         functionName: 'withdraw',
         args: [],
       });

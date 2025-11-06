@@ -23,7 +23,10 @@ import { useAccount } from 'wagmi';
 import { useQuery } from '@tanstack/react-query';
 import { readContract } from '@wagmi/core';
 import { wagmiConfig } from 'connectors/walletConnect';
-import { getStakeManagerAbi, getStakeManagerAddress } from 'config/contract';
+import {
+  getAaveStakeManagerAbi,
+  getStakeManagerAddress,
+} from 'config/contract';
 import { getEthPriceUrl } from 'config/env';
 import { setEthPrice } from 'redux/reducers/TokenSlice';
 
@@ -79,7 +82,7 @@ export function useInit() {
       try {
         const rate = await readContract(wagmiConfig, {
           address: getStakeManagerAddress() as `0x${string}`,
-          abi: getStakeManagerAbi(),
+          abi: getAaveStakeManagerAbi(),
           functionName: 'getRate',
         });
         dispatch(setRate(Number(rate) / 10 ** 18 + ''));
