@@ -188,7 +188,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="relative ml-[1.41rem] -translate-y-[.72rem]">
+        <div className="relative ml-[1rem] -translate-y-[.72rem]">
           <div className="absolute w-[1.42rem] h-[1.3675rem] left-0 top-0">
             <Image src={p1Img} alt="logo" layout="fill" />
           </div>
