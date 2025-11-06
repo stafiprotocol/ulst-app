@@ -22,14 +22,6 @@ export function getTokenChainName() {
   return appConfig.token.tokenChainName;
 }
 
-export function getDetailInfoListedIns() {
-  return appConfig.detailedInfo.listedIns;
-}
-
-export function getDetailInfoAudit() {
-  return appConfig.detailedInfo.audit;
-}
-
 export interface IFaqContent {
   type: string;
   content: string;
@@ -46,10 +38,6 @@ export function getFaqList(): IFaqItem[] {
 
 export function getUnstakeTipLink() {
   return appConfig.unstake.lockTipLink;
-}
-
-export function getAuditList() {
-  return appConfig.auditList;
 }
 
 export function getDefaultApr() {

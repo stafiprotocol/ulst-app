@@ -1,11 +1,11 @@
-import { Token } from "interfaces/token";
-import appConfig from "./appConf/app.json";
-import appDevConfig from "./appConf/dev.json";
-import appProdConfig from "./appConf/prod.json";
-import { getLsdTokenAddress } from "./contract";
+import { Token } from 'interfaces/token';
+import appConfig from './appConf/app.json';
+import appDevConfig from './appConf/dev.json';
+import appProdConfig from './appConf/prod.json';
+import { getLsdTokenAddress } from './contract';
 
 export function isDev() {
-  return process.env.NEXT_PUBLIC_ENV !== "production";
+  return process.env.NEXT_PUBLIC_ENV !== 'production';
 }
 
 export function getEvmChainId() {
@@ -27,14 +27,6 @@ export function getEvmRpc() {
     return appDevConfig.rpc;
   }
   return appProdConfig.rpc;
-}
-
-export function getLsdTokenMetamaskParam() {
-  return {
-    tokenAddress: getLsdTokenAddress(),
-    tokenSymbol: appConfig.token.lsdTokenName,
-    tokenDecimals: appConfig.token.lsdTokenDecimals,
-  };
 }
 
 export const allTokens = [Token.USDT, Token.USDC];

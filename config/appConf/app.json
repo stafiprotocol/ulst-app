@@ -2,42 +2,17 @@
   "appTitle": "ULST App",
   "token": {
     "lsdTokenName": "rUSD",
-    "lsdTokenDecimals": 6,
     "supportChains": ["Ethereum"],
     "tokenStandard": "ERC20",
     "tokenChainName": "Ethereum",
     "tokenImg": "/images/token/token.svg",
-    "lsdTokenImg": "/images/token/lsdToken.svg",
-    "chainImg": "/images/bsc_chain.svg"
+    "lsdTokenImg": "/images/token/lsdToken.svg"
   },
   "unstake": {
     "lockTipLink": "https://docs.stafi.io"
   },
   "apr": 5,
   "needRelayFee": false,
-  "detailedInfo": {
-    "audit": {
-      "nameList": ["Blocksec"],
-      "link": "https://github.com/stafiprotocol/security/tree/main/audits/202306_BlockSec_StaFi-BNBStaking"
-    },
-    "listedIns": [
-      {
-        "name": "CoinGecko",
-        "link": "https://www.coingecko.com/en/coins/stafi-staked-bnb"
-      },
-      {
-        "name": "CoinMarketCap",
-        "link": "https://coinmarketcap.com/currencies/stafi-staked-bnb/"
-      }
-    ]
-  },
-  "auditList": [
-    {
-      "name": "BlockSec",
-      "icon": "/images/audit/block_sec.svg",
-      "iconDark": "/images/audit/block_sec_dark.svg"
-    }
-  ],
   "faqList": [
     {
       "title": "What are the factors that affect the staking rewards?",

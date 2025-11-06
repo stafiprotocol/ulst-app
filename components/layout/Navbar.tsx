@@ -37,6 +37,7 @@ import styled from 'styled-components';
 import chainIcon from 'public/images/ethereum.png';
 import { useLsdBalance } from 'hooks/useLsdBalance';
 import { theme } from 'styles/material-ui-theme';
+import { addLsdTokenToMetaMask } from 'utils/web3Utils';
 
 const Navbar = () => {
   const { unreadNoticeFlag } = useAppSelector((state) => state.app);
@@ -166,20 +167,20 @@ const Navbar = () => {
               <span className="ml-[.02rem]">APR</span>
             </div>
 
-            {/* <div
-							className="ml-[.24rem] flex items-center cursor-pointer"
-							onClick={() => {
-								addLsdTokenToMetaMask();
-							}}
-						>
-							<div className="text-[#222c3c] text-[.14rem]">
-								Add {getLsdTokenName()} to Wallet
-							</div>
+            <div
+              className="ml-[.24rem] flex items-center cursor-pointer"
+              onClick={async () => {
+                await addLsdTokenToMetaMask();
+              }}
+            >
+              <div className="text-[#222c3c] text-[.14rem]">
+                Add {getLsdTokenName()} to Wallet
+              </div>
 
-							<span className="ml-[.06rem] flex items-center">
-								<Icomoon icon="share" size=".12rem" color="#FFFFFF" />
-							</span>
-						</div> */}
+              <span className="ml-[.06rem] flex items-center">
+                <Icomoon icon="share" size=".12rem" color="#222C3C" />
+              </span>
+            </div>
           </div>
 
           <div className="mt-[.02rem] text-[#222c3c] text-[.12rem] leading-normal">
