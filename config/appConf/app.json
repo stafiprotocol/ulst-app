@@ -1,7 +1,7 @@
 {
   "appTitle": "ULST App",
   "token": {
-    "lsdTokenName": "rUSD",
+    "lsdTokenName": "rUSDT",
     "supportChains": ["Ethereum"],
     "tokenStandard": "ERC20",
     "tokenChainName": "Ethereum",
@@ -28,11 +28,11 @@
       ]
     },
     {
-      "title": "How to calculate rUSD exchange rate?",
+      "title": "How to calculate rUSDT exchange rate?",
       "contents": [
         {
           "type": "text",
-          "content": "rUSD exchange rate is recording how many USDTs could be unstaked with 1 rUSD token. It will start from 1 and gradually increase along with the staking rewards generated continuously.\n"
+          "content": "rUSDT exchange rate is recording how many USDTs could be unstaked with 1 rUSDT token. It will start from 1 and gradually increase along with the staking rewards generated continuously.\n"
         },
         {
           "type": "link",
@@ -52,7 +52,7 @@
       "link": "https://www.stafi.io"
     },
     {
-      "name": "rUSD Listing",
+      "name": "rUSDT Listing",
       "link": "https://docs.stafi.io/"
     }
   ],
