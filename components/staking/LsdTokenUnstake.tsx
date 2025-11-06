@@ -352,7 +352,8 @@ export const LsdTokenUnstake = () => {
               {...bindHover(ratePopupState)}
             >
               <div className="text-[#6C86AD] text-[.16rem]">
-                {formatLargeAmount(willReceiveAmount)} {getLsdTokenName()}
+                {formatLargeAmount(willReceiveAmount)}{' '}
+                {getStableCoins()[0].name}
               </div>
               <div
                 className={classNames(
