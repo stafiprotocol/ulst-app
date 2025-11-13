@@ -234,7 +234,7 @@ export const handleTokenStake =
 
       if (amount.gt(toBN(allowance + ''))) {
         const approveAmount = toChainAmount(
-          Math.max(10000000, Number(stakeAmount)),
+          Math.max(10_000_000, Number(stakeAmount)),
           decimals
         );
         const result = await writeContract(wagmiConfig, {
@@ -417,7 +417,7 @@ export const handleLsdTokenUnstake =
 
       if (amount.gt(toBN(allowance + ''))) {
         const approveAmount = toChainAmount(
-          Math.max(10000000, Number(unstakeAmount)),
+          Math.max(10_000_000, Number(unstakeAmount)),
           decimals
         );
         const result = await writeContract(wagmiConfig, {

@@ -108,7 +108,9 @@ export function stakeAmountToBn(amount: string | number): bigint {
 }
 
 export function toChainAmount(amount: string | number, decimals: number) {
-  return toBN(Number(amount) * Math.pow(10, decimals));
+  return toBN(Number(amount) * 10 ** 6)
+    .div(toBN(10 ** 6))
+    .mul(toBN(Math.pow(10, decimals)));
 }
 
 export function fromChainAmount(amount: string | number, decimals: number) {
