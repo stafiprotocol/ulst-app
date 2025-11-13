@@ -31,7 +31,7 @@ import {
   updateWithdrawLoadingParams,
   updateUnstakeLoadingParams,
 } from './AppSlice';
-import BN from 'bn.js';
+import BN, { max } from 'bn.js';
 import { toBN, toWei } from 'web3-utils';
 import { wagmiConfig } from 'connectors/walletConnect';
 import {
@@ -189,6 +189,8 @@ export const handleTokenStake =
       : uuid();
 
     let txHash: string;
+    let shouldAddNotice = false;
+
     try {
       dispatch(setStakeLoading(true));
       dispatch(
@@ -231,7 +233,10 @@ export const handleTokenStake =
       const amount = toChainAmount(stakeAmount, decimals);
 
       if (amount.gt(toBN(allowance + ''))) {
-        const approveAmount = toChainAmount(10000000, decimals);
+        const approveAmount = toChainAmount(
+          Math.max(10000000, Number(stakeAmount)),
+          decimals
+        );
         const result = await writeContract(wagmiConfig, {
           functionName: 'approve',
           address: stableCoin.address as `0x${string}`,
@@ -250,6 +255,7 @@ export const handleTokenStake =
         }
       }
 
+      shouldAddNotice = true;
       const result = await writeContract(wagmiConfig, {
         functionName: 'stake',
         address: getStakeManagerAddress() as `0x${string}`,
@@ -318,6 +324,7 @@ export const handleTokenStake =
             msg: displayMsg,
           },
           (newParams) => {
+            if (!shouldAddNotice) return;
             dispatch(
               addNotice({
                 id: noticeUuid || uuid(),
@@ -367,6 +374,8 @@ export const handleLsdTokenUnstake =
     dispatch(setUnstakeLoading(true));
 
     let txHash: string;
+    let shouldAddNotice = false;
+
     try {
       // const web3 = createWeb3();
       dispatch(
@@ -407,7 +416,10 @@ export const handleLsdTokenUnstake =
       });
 
       if (amount.gt(toBN(allowance + ''))) {
-        const approveAmount = toChainAmount(10000000, decimals);
+        const approveAmount = toChainAmount(
+          Math.max(10000000, Number(unstakeAmount)),
+          decimals
+        );
         const result = await writeContract(wagmiConfig, {
           functionName: 'approve',
           address: getLsdTokenAddress() as `0x${string}`,
@@ -419,6 +431,7 @@ export const handleLsdTokenUnstake =
         });
       }
 
+      shouldAddNotice = true;
       const result = await writeContract(wagmiConfig, {
         address: getStakeManagerAddress() as `0x${string}`,
         abi: getAaveStakeManagerAbi(),
@@ -483,6 +496,7 @@ export const handleLsdTokenUnstake =
             customMsg: displayMsg || 'Unstake failed',
           },
           () => {
+            if (!shouldAddNotice) return;
             dispatch(
               addNotice({
                 id: noticeUuid || uuid(),
